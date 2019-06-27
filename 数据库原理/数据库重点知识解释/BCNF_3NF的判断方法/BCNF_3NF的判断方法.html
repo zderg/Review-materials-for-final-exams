@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>BCNF/3NF的判断方法 - KevinHwang - 博客园</title>
+    <meta property="og:description" content="判断是否是 3NF 的条件： 对于 R 上的每个函数依赖 X-&gt;A （X 是关系 R 属性的一个子集，A 是 R 的一个属性） ,以下条件中的一个成立：1 X ∈A2 X 是超码3 A 是 R ">
+    <link type="text/css" rel="stylesheet" href="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/bundle-BlackLowKey.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/bundle-BlackLowKey-mobile.css">
+    <link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/instant7/rss">
+    <link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/instant7/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/instant7/wlwmanifest.xml">
+    <script src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/f.txt"></script><script src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/pubads_impl_rendering_2019061701.js.下载"></script><script async="" src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/analytics.js.下载"></script><script src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script>var currentBlogId=201621;var currentBlogApp='instant7',cb_enable_mathjax=false;var isLogined=false;</script>
+    <script src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+<link rel="preload" href="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/f(1).txt" as="script"><script type="text/javascript" src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/f(1).txt"></script><script src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/pubads_impl_2019061701.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-33/html/container.html"></head>
+<body>
+<a name="top"></a>
+
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="https://www.cnblogs.com/instant7/"><img id="blogLogo" src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/instant7/">Instant</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/instant7/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/KevinHwang">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/instant7/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/instant7/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 54&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 11</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+        <div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/instant7/p/4201160.html">BCNF/3NF的判断方法</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>判断是否是 3NF 的条件： 对于 R 上的每个函数依赖 X-&gt;A （X 是关系 R 属性的一个子集，<br>A 是 R 的一个属性） ,以下条件中的一个成立：<br>1 X ∈&nbsp;A<br>2 X 是超码<br>3 A 是 R 的码的一部分</p>
+<p>判断是否是 BCNF 的条件：对于 R 上的每个函数依赖 X-&gt;A（X 是关系 R 属性的一个子<br>集，A 是 R 的一个属性） ,以下条件中的一个成立：<br>1 X ∈&nbsp;A<br>2 X 是超码</p>
+<p>例子如下：</p>
+<p><img src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/041452429976096.jpg" alt="" width="620" height="195"></p>
+<p>(a).<br>{ACD}+<br>= {A、C、D、B、E}<br>{BCD}+<br>={B、C、D、E、A}<br>{EDC}+<br>={E、D、C、A、B}<br>ACD、BCD、CDE are keys for R.</p>
+<p>(b)判断是否是 3NF 的条件： 对于 R 上的每个函数依赖 X-&gt;A （X 是关系 R 属性的一个子集，<br>A 是 R 的一个属性） ,以下条件中的一个成立：<br>1 X∈ A<br>2 X 是超码<br>3 A 是 R 的码的一部分<br>A-&gt;B 满足条件 3<br>BC-&gt;E 满足条件 3<br>ED-&gt;A 满足条件 3<br>所以 R 是 3NF<br>(c)判断是否是 BCNF 的条件：对于 R 上的每个函数依赖 X-&gt;A（X 是关系 R 属性的一个子<br>集，A 是 R 的一个属性） ,以下条件中的一个成立：<br>1 X ∈&nbsp;A<br>2 X 是超码<br>A-&gt;B 不满足 1&amp;2<br>BC-&gt;E 不满足 1&amp;2<br>ED-&gt;A 不满足 1&amp;2<br>所以 R 不是 BCNF</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag">标签: <a href="https://www.cnblogs.com/instant7/tag/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4201160,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;d2d66334-1846-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/instant7/" target="_blank"><img src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/20141025191838.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/instant7/">KevinHwang</a><br>
+            <a href="https://home.cnblogs.com/u/instant7/followees">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/instant7/followers">粉丝 - 5</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;d2d66334-1846-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4201160,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(4201160,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/instant7/p/4190980.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/instant7/p/4190980.html" title="发布于2014-12-29 08:55">在Latex中插入Python代码</a><br><a href="https://www.cnblogs.com/instant7/p/4229599.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/instant7/p/4229599.html" title="发布于2015-01-16 19:39">SAN LAN MAN WAN的区别</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2015-01-04 14:54</span> <a href="https://www.cnblogs.com/instant7/">KevinHwang</a> 阅读(<span id="post_view_count">8590</span>) 评论(<span id="post_comment_count">3</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4201160" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#" onclick="AddToWz(4201160);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=201621,cb_entryId=4201160,cb_blogApp=currentBlogApp,cb_blogUserGuid='d2d66334-1846-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2015/1/4 14:54:00';loadViewCount(cb_entryId);var cb_postType=1;var isMarkdown=false;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#3511490" class="layer">#1楼</a><a name="3511490" id="comment_anchor_3511490"></a>  <span class="comment_date">2016-09-16 16:58</span> <a id="a_comment_author_3511490" href="https://www.cnblogs.com/ningge/" target="_blank">ningge凝戈</a> <a href="http://msg.cnblogs.com/send/ningge%E5%87%9D%E6%88%88" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3511490" class="blog_comment_body">哥，你是不是写反了<br> X ∈ A<br>还是<br> A ∈ X</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3511490,&#39;Digg&#39;,this)">支持(2)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3511490,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#3588937" class="layer">#2楼</a><a name="3588937" id="comment_anchor_3588937"></a>  <span class="comment_date">2016-12-25 11:16</span> <a id="a_comment_author_3588937" href="https://www.cnblogs.com/WalkerSteve/" target="_blank">walkersteve</a> <a href="http://msg.cnblogs.com/send/walkersteve" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3588937" class="blog_comment_body"><a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#3511490" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3511490);">@</a>
+ningge凝戈<br>X包含A</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3588937,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3588937,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3588937_avatar" style="display:none;">http://pic.cnblogs.com/face/1028641/20170324104650.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#3725307" class="layer">#3楼</a><a name="3725307" id="comment_anchor_3725307"></a><span id="comment-maxId" style="display:none;">3725307</span><span id="comment-maxDate" style="display:none;">2017/6/29 14:10:58</span>  <span class="comment_date">2017-06-29 14:10</span> <a id="a_comment_author_3725307" href="https://www.cnblogs.com/wangchaowei/" target="_blank">WangC.W</a> <a href="http://msg.cnblogs.com/send/WangC.W" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3725307" class="blog_comment_body">是A包含于X，就是A属于X，楼主写反了。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3725307,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3725307,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3725307_avatar" style="display:none;">http://pic.cnblogs.com/face/1035807/20161208123937.png</span>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万C++/C#源码: 大型实时仿真组态图形源码</a><br><a href="https://www.grapecity.com.cn/developer/spreadjs?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=SpreadJS&amp;utm_campaign=community" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-SpreadJS&#39;)">【前端】SpreadJS表格控件，可嵌入系统开发的在线Excel</a><br><a href="https://gitee.com/enterprises?from=bky-1" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-gitee&#39;)">【推荐】码云企业版，高效的企业级软件协作开发管理平台</a><br><a href="https://q.cnblogs.com/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-博问&#39;)">【推荐】程序员问答平台，解决您开发中遇到的技术难题</a><br></div>
+<div id="opt_under_post"></div>
+<script async="async" src="./BCNF_3NF的判断方法 - KevinHwang - 博客园_files/gpt.js.下载"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+  googletag.cmd.push(function() {
+        googletag.defineSlot('/1090369/C1', [300, 250], 'div-gpt-ad-1546353474406-0').addService(googletag.pubads());
+        googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c1" class="c_ad_block" style="">
+    <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+</div>
+<div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a href="https://www.cnblogs.com/wangkongming/p/4011359.html" target="_blank" onclick="clickRecomItmem(4011359)">strtr函数的用法</a><br>·  <a href="https://www.cnblogs.com/labs/archive/2009/05/12/1455059.html" target="_blank" onclick="clickRecomItmem(1455059)">PHP 中将全角字符转换成半角的方法</a><br>·  <a href="https://www.cnblogs.com/lieying2911/archive/2006/08/09/472734.html" target="_blank" onclick="clickRecomItmem(472734)">＂用户 'NT AUTHORITY\NETWORK SERVICE' 登录失败。＂的解决方法．</a><br>·  <a href="https://www.cnblogs.com/lynnwayne/archive/2007/06/25/795495.html" target="_blank" onclick="clickRecomItmem(795495)">BCNF范式</a><br>·  <a href="https://www.cnblogs.com/wangyige/p/6786047.html" target="_blank" onclick="clickRecomItmem(6786047)">数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF</a><br></div></div>
+<div id="cnblogs_c2" class="c_ad_block" style="">
+    <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;"><div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block"><b>最新新闻</b>：<br> ·  <a href="https://news.cnblogs.com/n/627480/" target="_blank">你的硬盘是如何储存数据的？</a><br> ·  <a href="https://news.cnblogs.com/n/627479/" target="_blank">相比 Windows 为什么越来越多人选择Linux？</a><br> ·  <a href="https://news.cnblogs.com/n/627478/" target="_blank">花5200万美元去空间站度假？现实可能远不如想象中美好</a><br> ·  <a href="https://news.cnblogs.com/n/627477/" target="_blank">大力水手没骗人，多吃蔬菜果真有不同</a><br> ·  <a href="https://news.cnblogs.com/n/627476/" target="_blank">高通孟樸：5G的到来为人类开启了“发明时代”</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+ if(enablePostBottom()) {
+    codeHighlight();
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverT2();
+    deliverC1();
+    deliverC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);  
+}
+</script>
+</div>
+
+    
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/instant7/">KevinHwang</a><br>园龄：<a href="https://home.cnblogs.com/u/instant7/" title="入园时间：2014-09-27">4年9个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/instant7/followers/">5</a><br>关注：<a href="https://home.cnblogs.com/u/instant7/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;d2d66334-1846-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div><script>getFollowStatus('d2d66334-1846-e411-b908-9dcfd8948a71')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/05/01&#39;);return false;">&lt;</a></td><td align="center">2019年6月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/07/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td class="CalWeekendDay" align="center">1</td></tr><tr><td class="CalWeekendDay" align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td class="CalWeekendDay" align="center">8</td></tr><tr><td class="CalWeekendDay" align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td class="CalWeekendDay" align="center">15</td></tr><tr><td class="CalWeekendDay" align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td class="CalWeekendDay" align="center">22</td></tr><tr><td class="CalWeekendDay" align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalTodayDay" align="center">27</td><td align="center">28</td><td class="CalWeekendDay" align="center">29</td></tr><tr><td class="CalWeekendDay" align="center">30</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/instant7/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/instant7/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/instant7/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/instant7/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/instant7/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/instant7/tag/python/">python</a>(16)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>(14)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">网络原理</a>(8)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>(7)</li><li><a href="https://www.cnblogs.com/instant7/tag/matlab/">matlab</a>(7)</li><li><a href="https://www.cnblogs.com/instant7/tag/mysql/">mysql</a>(5)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>(5)</li><li><a href="https://www.cnblogs.com/instant7/tag/Android/">Android</a>(3)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E7%88%AC%E8%99%AB/">爬虫</a>(2)</li><li><a href="https://www.cnblogs.com/instant7/tag/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>(1)</li><li><a href="https://www.cnblogs.com/instant7/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/instant7/archive/2015/03.html">2015年3月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/instant7/archive/2015/02.html">2015年2月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/instant7/archive/2015/01.html">2015年1月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/instant7/archive/2014/12.html">2014年12月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/instant7/archive/2014/11.html">2014年11月 (25)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/instant7/archive/2014/10.html">2014年10月 (4)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/instant7/p/4201160.html#3725307">1. Re:BCNF/3NF的判断方法</a></li>
+        <li class="recent_comment_body">是A包含于X，就是A属于X，楼主写反了。</li>
+        <li class="recent_comment_author">--WangC.W</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/instant7/p/4102818.html#3699553">2. Re:重画GoogleClusterTrace数据</a></li>
+        <li class="recent_comment_body">您好，最近急需数据实验，目前FQ比较困难，您能分享一下taskevent吗？</li>
+        <li class="recent_comment_author">--LegooG</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/instant7/p/4201160.html#3588937">3. Re:BCNF/3NF的判断方法</a></li>
+        <li class="recent_comment_body">@ningge凝戈X包含A...</li>
+        <li class="recent_comment_author">--Walker_Steve</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/instant7/p/4201160.html#3511490">4. Re:BCNF/3NF的判断方法</a></li>
+        <li class="recent_comment_body">哥，你是不是写反了<br> X ∈ A<br>还是<br> A ∈ X</li>
+        <li class="recent_comment_author">--ningge凝戈</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/instant7/p/4160448.html#3440492">5. Re:简单的大众点评爬虫</a></li>
+        <li class="recent_comment_body">分享一个github上的大众点评网的爬虫源码：<a href="https://www.cnblogs.com/instant7/p/4201160.html?tdsourcetag=s_pcqq_aiomsg" target="_blank"></a></li>
+        <li class="recent_comment_author">--geckokuaiyi</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/instant7/p/4095882.html">1. 关系代数（Relation Algebra）与SQL语句的对应关系(9874)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4201160.html">2. BCNF/3NF的判断方法(8590)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4190980.html">3. 在Latex中插入Python代码(6592)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4132836.html">4. 使用Python爬取mobi格式电纸书(3304)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4093511.html">5. 研究内容、研究方法、研究方案的区别与联系(2080)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/instant7/p/4132836.html">1. 使用Python爬取mobi格式电纸书(5)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4201160.html">2. BCNF/3NF的判断方法(3)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4160448.html">3. 简单的大众点评爬虫(1)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4102818.html">4. 重画GoogleClusterTrace数据(1)</a></li><li><a href="https://www.cnblogs.com/instant7/p/4289293.html">5. 处理输入为非对角阵的Clustering by fast search and find of density peak代码(1)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap" style="display: none;">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2019 KevinHwang
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+</body></html>

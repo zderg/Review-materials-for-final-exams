@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF - 不行这个名字不够霸气 - 博客园</title>
+    <meta property="og:description" content="1.说白话一点：闭包就是由一个属性直接或间接推导出的所有属性的集合。 例（1）： 设有关系模式R(U，F)，其中U={A，B，C，D，E，I}，F={A→D，AB→E，BI→E，CD→I，E→C}，计">
+    <link type="text/css" rel="stylesheet" href="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/bundle-elf.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/bundle-elf-mobile.css">
+    <link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wangyige/rss">
+    <link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wangyige/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wangyige/wlwmanifest.xml">
+    <script src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/f.txt"></script><script src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/pubads_impl_rendering_2019061701.js.下载"></script><script async="" src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/analytics.js.下载"></script><script src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/jquery-2.2.0.min.js.下载"></script>
+    <script>var currentBlogId=304496;var currentBlogApp='wangyige',cb_enable_mathjax=false;var isLogined=false;</script>
+    <script src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/blog-common.js.下载" type="text/javascript"></script>
+<link rel="preload" href="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/f(1).txt" as="script"><script type="text/javascript" src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/f(1).txt"></script><script src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/pubads_impl_2019061701.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-33/html/container.html"></head>
+<body>
+<a name="top"></a>
+
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="https://www.cnblogs.com/wangyige/"><img id="blogLogo" src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/wangyige/">不行这个名字不够霸气</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wangyige/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E4%B8%8D%E8%A1%8C%E8%BF%99%E4%B8%AA%E5%90%8D%E5%AD%97%E4%B8%8D%E5%A4%9F%E9%9C%B8%E6%B0%94">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/wangyige/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/wangyige/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 5&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 2</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+        <div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/wangyige/p/6786047.html">数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p><span style="color: #ff0000;"><strong>1.说白话一点：闭包就是由一个属性直接或间接推导出的所有属性的集合。</strong></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;例（1）：&nbsp;&nbsp; 设有关系模式R(U，F)，其中U={A，B，C，D，E，I}，F={A→D，AB→E，BI→E，CD→I，E→C}，计算(AE)<sup>+</sup></p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解: &nbsp;(1) 令X={AE}，X(0)=AE</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; (2)在F中寻找尚未使用过的左边是AE的子集的函数依赖，结果是: A→D， E→C；所以 X(1)=X(0)DC=ACDE， 显然 X(1)≠X(0).</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3) 在F中寻找尚未使用过的左边是ACDE的子集的函数依赖， 结果是: CD→I；所以 X(2)=X(1)I=ACDEI。虽然X（2）≠X(1)，但F中寻找尚未使用过函数依赖的左边已经没有X（2）的子集，所以不必再计算下去，即(AE)<sup>+</sup>=ACDEI。</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例如：f={a-&gt;b，b-&gt;c，a-&gt;d，e-&gt;f}；由a可直接得到b和d，间接得到c，则a的闭包就是{a，b，c，d}</p>
+<p><span style="color: #ff0000;"><strong>2.</strong></span></p>
+<p><span style="color: #ff0000;"><strong>候选码的求解理论和算法</strong></span></p>
+<p>　　对于给定的关系R（A1，A2，…An）和函数依赖集F，可将其属性分为4类：</p>
+<p>　　　　L类&nbsp; 仅出现在函数依赖左部的属性。</p>
+<p>　　　　R 类&nbsp; 仅出现在函数依赖右部的属性。</p>
+<p>　　　　N 类&nbsp; 在函数依赖左右两边均未出现的属性。</p>
+<p>　　　　LR类&nbsp; 在函数依赖左右两边均出现的属性。</p>
+<p>　　定理：对于给定的关系模式R及其函数依赖集F，若X（X∈R）是L类属性，则X必为R的任一候选码的成员。</p>
+<p>　　推论：对于给定的关系模式R及其函数依赖集F，若X（X∈R）是L类属性，且X<sup>+</sup>包含了R的全部属性；则X必为R的唯一候选码。</p>
+<p>　　例（2）：设有关系模式R（A，B，C，D），其函数依赖集F={D→B，B →D，AD →B，AC →D}，求R的所有候选码。</p>
+<p>　　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 解：考察F发现，A，C两属性是L类属性，所以AC必是R的候选码成员，又因为（AC）<sup>+</sup>=ABCD，所以AC是R的唯一候选码。</p>
+<p>　　定理：对于给定的关系模式R及其函数依赖集F，若X（X∈R）是R类属性，则X不在任何候选码中。</p>
+<p>　　定理：对于给定的关系模式R及其函数依赖集F，若X（X∈R）是N类属性，则X必包含在R的任一候选码中。</p>
+<p>　　推论：对于给定的关系模式R及其函数依赖集F，若X（X∈R）是L类和N类组成的属性集，且X<sup>+</sup>包含了R的全部属性；则X是R的唯一候选码。</p>
+<p><strong><span style="color: #ff0000;">具体的步骤：</span></strong></p>
+<p><span style="color: #000000;"><strong>算法描述 <br>（1）将R&nbsp;的所有属性分为L、R、LR&nbsp;和N&nbsp;四类，并令X&nbsp;代表L、N&nbsp;类，Y&nbsp;代表LR&nbsp;类。 <br>（2）求X+。若X+包含了R&nbsp;的全部属性，则即为R&nbsp;的唯一候选码，转（5）；否则，转（3）。</strong></span></p>
+<p><span style="color: #000000;"><strong>（3）在Y&nbsp;中取一属性A，求（XA）+&nbsp;，若它包含了R&nbsp;的全部属性，则是候选码，转（4）；否则，调换一属性反复进行这一过程，直到试完所有Y&nbsp;中的属性。 <br>（4）如果已找出所有候选码，则转（5）；否则在Y&nbsp;中依次取2&nbsp;个、3&nbsp;个、…，求它们的属性闭包，若其闭包包含R&nbsp;的全部属性，则是候选码。&nbsp;</strong></span></p>
+<p><span style="color: #000000;"><strong>（5）结束。</strong></span></p>
+<p><span style="color: #ff0000;"><strong>3.求最小函数依赖集分三步:</strong></span><br><br>1.将F中的所有依赖右边化为单一元素<br><br>此题fd={abd-&gt;e,ab-&gt;g,b-&gt;f,c-&gt;j,cj-&gt;i,g-&gt;h};已经满足<br><br>2.去掉F中的所有依赖左边的冗余属性.<br><br>作法是属性中去掉其中的一个,看看是否依然可以推导<br><br>此题:abd-&gt;e,去掉a,则(bd)+不含e,故不能去掉,同理b,d都不是冗余属性<br><br>ab-&gt;g,也没有<br><br>cj-&gt;i,因为c+={c,j,i}其中包含i所以j是冗余的.cj-&gt;i将成为c-&gt;i<br><br>F={abd-&gt;e,ab-&gt;g,b-&gt;f,c-&gt;j,c-&gt;i,g-&gt;h};<br><br>3.去掉F中所有冗余依赖关系.<br><br>做法为从F中去掉某关系,如去掉(X-&gt;Y),然后在F中求X+,如果Y在X+中,则表明x-&gt;是多余的.需要去掉.<br><br>此题如果F去掉abd-&gt;e,F将等于{ab-&gt;g,b-&gt;f,c-&gt;j,c-&gt;i,g-&gt;h},而(abd)+={a,d,b,f,g,h},其中不包含e.所有不是多余的.<br><br>同理(ab)+={a,b,f}也不包含g,故不是多余的.<br><br>b+={b}不多余,c+={c,i}不多余<br><br>c-&gt;i,g-&gt;h多不能去掉.<br><br>所以所求最小函数依赖集为 F={abd-&gt;e,ab-&gt;g,b-&gt;f,c-&gt;j,c-&gt;i,g-&gt;h};</p>
+<p><strong><span style="color: #ff0000;">4.判断模式分解是否为无损连接</span></strong></p>
+<p>方法一：无损连接定理</p>
+<p>关系模式R(U，F)的一个分解，ρ={R<sub>1</sub>&lt;U<sub>1</sub>,F<sub>1</sub>&gt;,R<sub>2</sub>&lt;U<sub>2</sub>,F<sub>2</sub>&gt;}具有无损连接的充分必要条件是：</p>
+<p>U<sub>1</sub>∩U<sub>2</sub>→U<sub>1</sub>-U<sub>2&nbsp;</sub>€F<sup>+&nbsp;</sup>或U<sub>1</sub>∩U<sub>2</sub>→U2&nbsp;-U1€F<sup>+</sup></p>
+<p>方法二：算法</p>
+<p>ρ={R<sub>1</sub>&lt;U<sub>1</sub>,F<sub>1</sub>&gt;,R<sub>2</sub>&lt;U<sub>2</sub>,F<sub>2</sub>&gt;,...,R<sub>k</sub>&lt;U<sub>k</sub>,F<sub>k</sub>&gt;}是关系模式R&lt;U,F&gt;的一个分解，U={A<sub>1</sub>,A<sub>2</sub>,...,A<sub>n</sub>}，F={FD<sub>1</sub>,FD<sub>2</sub>,...,FD<sub>p</sub>}，并设F是一个最小依赖集，记FD<sub>i</sub>为X<sub>i</sub>→A<sub>lj</sub>，其步骤如下：</p>
+<p>① 建立一张n列k行的表，每一列对应一个属性，每一行对应分解中的一个关系模式。若属性A<sub>j</sub><span class="Apple-converted-space">&nbsp;U<sub>i</sub>，则在j列i行上真上a<sub>j</sub>，否则填上b<sub>ij</sub>；</span></p>
+<p>② 对于每一个FD<sub>i</sub>做如下操作：找到X<sub>i</sub>所对应的列中具有相同符号的那些行。考察这些行中l<sub>i</sub>列的元素，若其中有a<sub>j</sub>，则全部改为a<sub>j</sub>，否则全部改为b<sub>mli</sub>，m是这些行的行号最小值。</p>
+<p><strong>如果在某次更改后，有一行成为：a<sub>1</sub>,a<sub>2</sub>,...,a<sub>n</sub>，则算法终止。且分解ρ具有无损连接性</strong>，否则不具有无损连接性。</p>
+<p>对F中p个FD逐一进行一次这样的处理，称为对F的一次扫描。</p>
+<p>③ 比较扫描前后，表有无变化，如有变化，则返回第②&nbsp;步，否则算法终止。如果发生循环，那么前次扫描至少应使该表减少一个符号，表中符号有限，因此，循环必然终止。</p>
+<p>举例1：已知R&lt;U,F&gt;，U={A,B,C}，F={A→B}，如下的两个分解：</p>
+<p>① ρ<sub>1</sub>={AB,BC}</p>
+<p>② ρ<sub>2</sub>={AB,AC}</p>
+<p>判断这两个分解是否具有无损连接性。</p>
+<p>①因为AB∩BC=B，AB-BC=A，BC-AB=C</p>
+<div>
+<p>所以B→A ¢F<sup>+</sup>，B→C&nbsp;¢ F<sup>+</sup></p>
+<p>故ρ<sub>1</sub>是有损连接。</p>
+
+
+
+</div>
+<p>②&nbsp;因为AB∩AC=A，AB-AC=B，AC-AB=C</p>
+<p>所以A→B €F<sup>+</sup>，A→C ¢F<sup>+</sup></p>
+<p>故ρ<sub>2</sub>是无损连接。</p>
+<p>举例2：已知R&lt;U,F&gt;，U={A,B,C,D,E}，F={A→C,B→C,C→D,DE→C,CE→A}，R的一个分解为R<sub>1</sub>(AD)，R<sub>2</sub>(AB)，R<sub>3</sub>(BE)，R<sub>4</sub>(CDE)，R<sub>5</sub>(AE)，判断这个分解是否具有无损连接性。</p>
+<p>&nbsp;① 构造一个初始的二维表，若“属性”属于“模式”中的属性，则填a<sub>j</sub>，否则填b<sub>ij</sub></p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211054351402115.png" alt=""></p>
+<p>② 根据A→C，对上表进行处理，由于属性列A上第1、2、5行相同均为a<sub>1</sub>，所以将属性列C上的b<sub>13</sub>、b<sub>23</sub>、b<sub>53</sub>改为同一个符号b<sub>13</sub>（取行号最小值）。</p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211056092031146.png" alt=""></p>
+<p>③ 根据B→C，对上表进行处理，由于属性列B上第2、3行相同均为a<sub>2</sub>，所以将属性列C上的b<sub>13</sub>、b<sub>33</sub>改为同一个符号b<sub>13</sub>（取行号最小值）。</p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211056516099856.png" alt=""></p>
+<p>④ 根据C→D，对上表进行处理，由于属性列C上第1、2、3、5行相同均为b<sub>13</sub>，所以将属性列D上的值均改为同一个符号a<sub>4</sub>。</p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211057216409447.png" alt=""></p>
+<p>⑤ 根据DE→C，对上表进行处理，由于属性列DE上第3、4、5行相同均为a<sub>4</sub>a<sub>5</sub>，所以将属性列C上的值均改为同一个符号a<sub>3</sub>。</p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211057502961728.png" alt=""></p>
+<p>⑥ 根据CE→A，对上表进行处理，由于属性列CE上第3、4、5行相同均为a<sub>3</sub>a<sub>5</sub>，所以将属性列A上的值均改为同一个符号a<sub>1</sub>。</p>
+<p><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/211058348282823.png" alt=""></p>
+<p>⑦ 通过上述的修改，使第三行成为a<sub>1</sub>a<sub>2</sub>a<sub>3</sub>a<sub>4</sub>a<sub>5</sub>，则算法终止。且分解具有无损连接性。</p>
+<p><strong><span style="color: #ff0000;">5.3NF</span></strong></p>
+<p><span style="color: #000000;"><span style="color: #000000;">第一范式<br>在任何一个关系数据库中，第一范式（1NF）是对关系模式的基本要求，不满足第一范式（1NF）的数据库就不是关系数据库。<br>所谓第一范式（1NF）是指数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。如果出现重复的属性，就可能需要定义一个新的实体，新的实体由重复的属性构成，新实体与原实体之间为一对多关系。在第一范式（1NF）中表的每一行只包含一个实例的信息。例如，对于图3-2
+ 
+中的员工信息表，不能将员工信息都放在一列中显示，也不能将其中的两列或多列在一列中显示；员工信息表的每一行只表示一个员工的信息，一个员工的信息在表中只出现一次。简而言之，第一范式就是无重复的列。<br>第二范式<br>第二范式（2NF）是在第一范式（1NF）的基础上建立起来的，即满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）要求数据库表中的每个实例或行必须可以被唯一地区分。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。如图3-2
+ 
+员工信息表中加上了员工编号（emp_id）列，因为每个员工的员工编号是唯一的，因此每个员工可以被唯一区分。这个唯一属性列被称为主关键字或主键、主码。<br>第二范式（2NF）要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性，如果存在，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与原实体之间是一对多的关系。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。简而言之，第二范式就是非主属性非部分依赖于主关键字。<br>第三范式<br>满足第三范式（3NF）必须先满足第二范式（2NF）。简而言之，第三范式（3NF）要求一个数据库表中不包含已在其它表中已包含的非主关键字信息。例如，存在一个部门信息表，其中每个部门有部门编号（dept_id）、部门名称、部门简介等信息。那么在图3-2的员工信息表中列出部门编号后就不能再将部门名称、部门简介等与部门有关的信息再加入员工信息表中。如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。简而言之，第三范式就是属性不依赖于其它非主属性。<br>满足第三范式的条件：<br>若关系R中存在非平凡FD A1A2A3……An-&gt;B,且要么左边{A1A2A3……An}是超键，要么右边的B属于某个键，则认为关系R属于第三范式(3NF).</span></span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6786047,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;bbc4de71-ec73-e611-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/wangyige/" target="_blank"><img src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/wangyige/">不行这个名字不够霸气</a><br>
+            <a href="https://home.cnblogs.com/u/wangyige/followees">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/wangyige/followers">粉丝 - 1</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;bbc4de71-ec73-e611-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6786047,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">4</span>
+    </div>
+    <div class="buryit" onclick="votePost(6786047,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/wangyige/p/6709129.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/wangyige/p/6709129.html" title="发布于2017-04-14 15:33">Linux LVM 配置</a><br><a href="https://www.cnblogs.com/wangyige/p/6873442.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/wangyige/p/6873442.html" title="发布于2017-05-18 14:59">JAVA中快速生成get与set</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2017-04-29 19:36</span> <a href="https://www.cnblogs.com/wangyige/">不行这个名字不够霸气</a> 阅读(<span id="post_view_count">23353</span>) 评论(<span id="post_comment_count">2</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6786047" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg#" onclick="AddToWz(6786047);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=304496,cb_entryId=6786047,cb_blogApp=currentBlogApp,cb_blogUserGuid='bbc4de71-ec73-e611-9fc1-ac853d9f53cc',cb_entryCreatedDate='2017/4/29 19:36:00';loadViewCount(cb_entryId);var cb_postType=1;var isMarkdown=false;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg#4010699" class="layer">#1楼</a><a name="4010699" id="comment_anchor_4010699"></a>  <span class="comment_date">2018-07-02 14:16</span> <a id="a_comment_author_4010699" href="http://home.cnblogs.com/u/1427537/" target="_blank">euoggu</a> <a href="http://msg.cnblogs.com/send/euoggu" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4010699" class="blog_comment_body">good</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4010699,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4010699,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg#4250356" class="layer">#2楼</a><a name="4250356" id="comment_anchor_4250356"></a><span id="comment-maxId" style="display:none;">4250356</span><span id="comment-maxDate" style="display:none;">2019/5/8 8:49:42</span>  <span class="comment_date">2019-05-08 08:49</span> <a id="a_comment_author_4250356" href="http://home.cnblogs.com/u/1626463/" target="_blank">pinkvita</a> <a href="http://msg.cnblogs.com/send/pinkvita" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4250356" class="blog_comment_body">请问可以转载吗</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4250356,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4250356,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/wangyige/p/6786047.html?tdsourcetag=s_pcqq_aiomsg#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万C++/C#源码: 大型实时仿真组态图形源码</a><br><a href="https://www.grapecity.com.cn/developer/spreadjs?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=SpreadJS&amp;utm_campaign=community" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-SpreadJS&#39;)">【前端】SpreadJS表格控件，可嵌入系统开发的在线Excel</a><br><a href="https://gitee.com/enterprises?from=bky-1" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-gitee&#39;)">【推荐】码云企业版，高效的企业级软件协作开发管理平台</a><br><a href="https://q.cnblogs.com/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-博问&#39;)">【推荐】程序员问答平台，解决您开发中遇到的技术难题</a><br></div>
+<div id="opt_under_post"></div>
+<script async="async" src="./数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接_files/gpt.js.下载"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+  googletag.cmd.push(function() {
+        googletag.defineSlot('/1090369/C1', [300, 250], 'div-gpt-ad-1546353474406-0').addService(googletag.pubads());
+        googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c1" class="c_ad_block" style="">
+    <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+</div>
+<div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a href="https://www.cnblogs.com/hadoopdev/p/4235509.html" target="_blank" onclick="clickRecomItmem(4235509)">数据仓库3NF基础理论和实例</a><br>·  <a href="https://www.cnblogs.com/luoshen/p/8794466.html" target="_blank" onclick="clickRecomItmem(8794466)">数据库三大范式</a><br>·  <a href="https://www.cnblogs.com/slteam/archive/2011/05/03/2035276.html" target="_blank" onclick="clickRecomItmem(2035276)">数据库设计的三个范式（整理硬盘时找到的，虽然很久但还很有用）</a><br>·  <a href="https://www.cnblogs.com/kaffeetrinken/p/8506057.html" target="_blank" onclick="clickRecomItmem(8506057)">数据库三大范式</a><br>·  <a href="https://www.cnblogs.com/zhoading/p/10955564.html" target="_blank" onclick="clickRecomItmem(10955564)">数据库闭包和候选码求解方法</a><br></div></div>
+<div id="cnblogs_c2" class="c_ad_block" style="">
+    <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;"><div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block"><b>最新新闻</b>：<br> ·  <a href="https://news.cnblogs.com/n/627480/" target="_blank">你的硬盘是如何储存数据的？</a><br> ·  <a href="https://news.cnblogs.com/n/627479/" target="_blank">相比 Windows 为什么越来越多人选择Linux？</a><br> ·  <a href="https://news.cnblogs.com/n/627478/" target="_blank">花5200万美元去空间站度假？现实可能远不如想象中美好</a><br> ·  <a href="https://news.cnblogs.com/n/627477/" target="_blank">大力水手没骗人，多吃蔬菜果真有不同</a><br> ·  <a href="https://news.cnblogs.com/n/627476/" target="_blank">高通孟樸：5G的到来为人类开启了“发明时代”</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+ if(enablePostBottom()) {
+    codeHighlight();
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverT2();
+    deliverC1();
+    deliverC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);  
+}
+</script>
+</div>
+
+    
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/wangyige/">不行这个名字不够霸气</a><br>园龄：<a href="https://home.cnblogs.com/u/wangyige/" title="入园时间：2016-09-06">2年9个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/wangyige/followers/">1</a><br>关注：<a href="https://home.cnblogs.com/u/wangyige/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;bbc4de71-ec73-e611-9fc1-ac853d9f53cc&#39;)">+加关注</a></div><script>getFollowStatus('bbc4de71-ec73-e611-9fc1-ac853d9f53cc')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/05/01&#39;);return false;">&lt;</a></td><td align="center">2019年6月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/07/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td class="CalWeekendDay" align="center">1</td></tr><tr><td class="CalWeekendDay" align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td class="CalWeekendDay" align="center">8</td></tr><tr><td class="CalWeekendDay" align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td class="CalWeekendDay" align="center">15</td></tr><tr><td class="CalWeekendDay" align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td class="CalWeekendDay" align="center">22</td></tr><tr><td class="CalWeekendDay" align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalTodayDay" align="center">27</td><td align="center">28</td><td class="CalWeekendDay" align="center">29</td></tr><tr><td class="CalWeekendDay" align="center">30</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/wangyige/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/wangyige/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/wangyige/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/wangyige/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/wangyige/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/wangyige/archive/2017/05.html">2017年5月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/wangyige/archive/2017/04.html">2017年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/wangyige/archive/2016/09.html">2016年9月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_links993193" class="catList sidebar-block">
+<h3 class="catListTitle">eclipse中配置插件</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://blog.csdn.net/hhhccckkk/article/details/10458159" rel="nofollow">eclipse中使用egit</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="https://www.cnblogs.com/xuehanyu/p/4521980.html" rel="nofollow">JUnit 4在Eclipse中的使用 - Love&amp; - 博客园</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="https://www.cnblogs.com/snifferhu/p/3463597.html" rel="nofollow">PMD使用教程</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="https://www.cnblogs.com/pony1223/p/Findbugs.html" rel="nofollow">配置FindBugs和常见FindBugs错误 - pony1223 - 博客园</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://jingyan.baidu.com/article/ca2d939dd90183eb6d31ce79.html?qq-pf-to=pcqq.c2c" rel="nofollow">手把手图文教你eclipse下如何配置tomcat_百度经验</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_links992761" class="catList sidebar-block">
+<h3 class="catListTitle">github</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2" rel="nofollow">Git - 查看提交历史</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="http://blog.csdn.net/djl4104804/article/details/50778736" rel="nofollow">git -branch</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_2" href="https://www.cnblogs.com/BeginMan/p/3577553.html" rel="nofollow">git log 常用命令及技巧 - BeginMan - 博客园</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_links993198" class="catList sidebar-block">
+<h3 class="catListTitle">JAVA Struts</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="http://www.oschina.net/code/snippet_119226_12833" rel="nofollow">Java Struts2 实现CRUD - 开源中国社区</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_1" href="http://blog.csdn.net/wwwgeyang777/article/details/19078545/" rel="nofollow">Struts2入门示例教程 - ALCAT的专栏 - 博客频道 - CSDN.NET</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_mysql配置相关链接" class="catListmysql配置相关链接 sidebar-block">
+<h3 class="catListTitle">设置数据库</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_4_Link_0" href="http://wenku.baidu.com/link?url=XZIcu3xjtimMK6IHwQMvfsox0R5uvdRAQNyFC9SlaV5fSxZubByov3Igb1nlSgh_cITckkTv6UQ19_lkboGo1U35EsyRE72RvyN2HuPqbuS" rel="nofollow">mysql_jdbc连接数据库-错误提示_百度文库</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_1" href="http://zhidao.baidu.com/link?url=Gh1s5AKc5qBIEDXEmbBqxbFm4aCaz54fsKmkQXySe9b5B5hf9lZgT3Kf6LXPFGOwembaWYxfHpI4irIp_c51dB7n9VzZk-otgj9kU9wCVIG" rel="nofollow">mysql5.6免安装版怎么用_百度知道</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_2" href="http://www.duote.com/tech/1/2430_5.html#contentbody" rel="nofollow">MySQL安装教程图解_MySQL教程</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_3" href="http://blog.csdn.net/waixin/article/details/3990201" rel="nofollow">mysql链接错误</a> </li>
+<li class="c_b_p_link_desc"> Can't connect to MySQL server on 'localhost' (10061))</li>
+<li><a id="CatList_LinkList_4_Link_4" href="http://blog.csdn.net/dmtnewtons_blog/article/details/9666995" rel="nofollow">mysql免安装版安装</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_5" href="http://c.biancheng.net/cpp/html/1442.html" rel="nofollow">Mysql命令mysqladmin：修改用户密码_MySQL中文网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_6" href="http://blog.csdn.net/red4711/article/details/6007248" rel="nofollow">设置MYSQL数据库编码为UTF-8 - red4711的专栏 - 博客频道 - CSDN.NET</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_7" href="http://www.doc88.com/p-3157969792838.html" rel="nofollow">数据库第3章习题解答 - 其他考试资料 - 道客巴巴</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_8" href="http://c.biancheng.net/cpp/html/1444.html" rel="nofollow">数据库命令</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/wangyige/p/6786047.html#4250356">1. Re:数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF</a></li>
+        <li class="recent_comment_body">请问可以转载吗</li>
+        <li class="recent_comment_author">--pinkvita</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/wangyige/p/6786047.html#4010699">2. Re:数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF</a></li>
+        <li class="recent_comment_body">good</li>
+        <li class="recent_comment_author">--euoggu</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/wangyige/p/6786047.html">1. 数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF(23353)</a></li><li><a href="https://www.cnblogs.com/wangyige/p/6873442.html">2. JAVA中快速生成get与set(239)</a></li><li><a href="https://www.cnblogs.com/wangyige/p/5893179.html">3. setBounds方法，与setLayout(null)(124)</a></li><li><a href="https://www.cnblogs.com/wangyige/p/6876125.html">4. java struts2 debug(75)</a></li><li><a href="https://www.cnblogs.com/wangyige/p/6709129.html">5. Linux LVM 配置(69)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/wangyige/p/6786047.html">1. 数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF(2)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="https://www.cnblogs.com/wangyige/p/6786047.html">1. 数据库求闭包，求最小函数依赖集，求候选码，判断模式分解是否为无损连接，3NF，BCNF(4)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2019 不行这个名字不够霸气
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+</body></html>
